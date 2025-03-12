@@ -1,0 +1,114 @@
+/* Modern Styles for Smart Resume */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f7fc;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensures full viewport height */
+}
+
+.container {
+  max-width: 1200px;
+  width: 100%;
+  padding: 20px;
+}
+
+.card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 20px;
+}
+
+h1 {
+  text-align: center;
+  color: #007bff;
+  font-weight: bold;
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+button {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* Resume Layout */
+.resume-container {
+  display: flex;
+  flex-direction: row;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  max-width: 1000px;
+  width: 100%;
+  margin: auto;
+}
+
+.left-column {
+  width: 30%;
+  background: red;
+  color: #007bff;
+  padding: 30px;
+  text-align: center;
+}
+
+.profile-picture {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  display: block;
+  margin: 20px auto;
+  border: 3px solid white;
+}
+
+.right-column {
+  width: 70%;
+  padding: 30px;
+  background: green;
+}
+
+p {
+  margin: 10px 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+h5 {
+  font-weight: bold;
+  color: #007bff;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    display: block;
+  }
+
+  .resume-container {
+    flex-direction: column;
+    width: 95%;
+    margin: 30px auto;
+  }
+
+  .left-column, .right-column {
+    width: 100%;
+  }
+}

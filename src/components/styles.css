@@ -8,8 +8,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Ensures full viewport height */
+  min-height: 100vh;
 }
+
+
+
+.hide-download {
+  display: none !important;
+}
+
+
 
 .container {
   max-width: 1200px;
@@ -48,9 +56,9 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Resume Layout */
+/* Resume Layout (Only Visible After Clicking Generate) */
 .resume-container {
-  display: flex;
+  display: none; /* Initially hidden */
   flex-direction: row;
   background: white;
   border-radius: 10px;
@@ -59,11 +67,18 @@ button:hover {
   max-width: 1000px;
   width: 100%;
   margin: auto;
+  padding: 20px;
 }
+
+.show-resume {
+  display: flex !important; /* Ensure it overrides 'display: none' */
+}
+
+
 
 .left-column {
   width: 30%;
-  background: red;
+  background: #C7D9DD;
   color: #007bff;
   padding: 30px;
   text-align: center;
@@ -81,7 +96,16 @@ button:hover {
 .right-column {
   width: 70%;
   padding: 30px;
-  background: green;
+  background: #D5E5D5;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  margin-top: 20px;
 }
 
 p {
@@ -89,6 +113,13 @@ p {
   font-size: 16px;
   line-height: 1.6;
   color: #333;
+}
+
+/* Work Experience */
+.experience-item {
+  margin-bottom: 15px;
+  padding-left: 10px;
+  border-left: 3px solid #007bff;
 }
 
 h5 {

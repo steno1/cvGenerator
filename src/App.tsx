@@ -12,19 +12,21 @@ const SmartResume: React.FC = () => {
     email: "",
     phone: "",
     about: "",
-    website: "",
     skills: "",
     education: "",
-    experience: "",
-    hobbies: "",
+    workExperience: [{ company: "", title: "", from: "", to: "", responsibilities: "" }],
     profilePicture: "",
   });
-  const [showCV, setShowCV] = useState(false);
 
+  const [showCV, setShowCV] = useState(false);
+  const [pdfDownloaded, setPdfDownloaded] = useState(false);
+
+  // Handle text input and textarea changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  // Handle file upload for profile picture
   const handleProfilePictureUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
@@ -35,13 +37,22 @@ const SmartResume: React.FC = () => {
     }
   };
 
-  const generateCV = () => {
+  // Show the generated CV
+  const generateCV = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); // Prevent form submission
     setShowCV(true);
+    setPdfDownloaded(false); // Reset PDF download state
+    document.querySelector('.resume-container')?.classList.add('show-resume');
   };
 
+  // Convert resume to PDF and download
   const downloadPDF = () => {
     const input = document.getElementById("resume-preview");
-    if (!input) return;
+    const downloadButton = document.getElementById("download-btn");
+    if (!input || !downloadButton) return;
+
+    // Hide the button before capturing
+    downloadButton.style.display = 'none';
 
     setTimeout(() => {
       html2canvas(input, { backgroundColor: "#ffffff", useCORS: true }).then((canvas) => {
@@ -51,6 +62,12 @@ const SmartResume: React.FC = () => {
         const imgHeight = (canvas.height * imgWidth) / canvas.width;
         pdf.addImage(imgData, "PNG", 10, 10, imgWidth, imgHeight);
         pdf.save("resume.pdf");
+
+        // Show the button again after download
+        downloadButton.style.display = 'block';
+
+        // Hide the Download PDF button after downloading
+        setPdfDownloaded(true);
       });
     }, 1000);
   };
@@ -92,15 +109,13 @@ const SmartResume: React.FC = () => {
             <Form.Label>Education</Form.Label>
             <Form.Control type="text" name="education" value={formData.education} onChange={handleChange} required />
           </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label>Experience</Form.Label>
-            <Form.Control type="text" name="experience" value={formData.experience} onChange={handleChange} required />
-          </Form.Group>
           <Button variant="primary" className="w-100 mt-3" onClick={generateCV}>
             Generate CV
           </Button>
         </Form>
       </Card>
+
+      {/* Resume Preview */}
       {showCV && (
         <div id="resume-preview" className="resume-container mt-4">
           <Row>
@@ -111,16 +126,32 @@ const SmartResume: React.FC = () => {
               <p>{formData.about}</p>
             </Col>
             <Col md={8} className="right-column">
-              <h5>Contact</h5>
+              <h5>Contact Information</h5>
               <p><strong>Email:</strong> {formData.email}</p>
               <p><strong>Phone:</strong> {formData.phone}</p>
               <h5>Skills</h5>
               <p>{formData.skills}</p>
               <h5>Education</h5>
               <p>{formData.education}</p>
-              <h5>Experience</h5>
-              <p>{formData.experience}</p>
-              <Button variant="success" className="mt-3" onClick={downloadPDF}>Download PDF</Button>
+              <h5>Work Experience</h5>
+              {formData.workExperience.map((job, index) => (
+                <div key={index} className="job-experience">
+                  <p><strong>Company:</strong> {job.company}</p>
+                  <p><strong>Title:</strong> {job.title}</p>
+                  <p><strong>Duration:</strong> {job.from} - {job.to}</p>
+                  <p><strong>Responsibilities:</strong> {job.responsibilities}</p>
+                </div>
+              ))}
+              {!pdfDownloaded && (
+                <Button 
+                  id="download-btn"
+                  variant="success" 
+                  className="mt-3" 
+                  onClick={downloadPDF}
+                >
+                  Download PDF
+                </Button>
+              )}
             </Col>
           </Row>
         </div>

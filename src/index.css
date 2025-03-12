@@ -18,3 +18,8 @@ code {
   box-shadow: none !important; /* Remove any unwanted shadows */
 }
 
+
+.hide-download {
+  display: none !important;
+}
+
